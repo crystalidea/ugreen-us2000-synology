@@ -1,0 +1,20 @@
+services:
+  nut:
+    build: .
+    image: nut-us2000:88948fb
+    container_name: nut-us2000
+    restart: unless-stopped
+    ports:
+      - "172.18.0.1:3493:3493"
+    volumes:
+      - ./config:/opt/nut-install/etc/nut:ro
+      - /dev/bus/usb:/dev/bus/usb
+    device_cgroup_rules:
+      - 'c 189:* rmw'
+networks:
+  default:
+    name: nut-us2000_default
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
