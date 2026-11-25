@@ -18,6 +18,11 @@ RUN git init /opt/nut \
     && make -j4 \
     && make install
 
+# DSM runs `killall upsd` every time UPS settings are applied, and it sees
+# container processes, so a server named upsd is shot from outside the
+# container. The driver is unaffected: its name does not match.
+RUN mv /opt/nut-install/sbin/upsd /opt/nut-install/sbin/nut-upsd
+
 COPY start.sh /start.sh
 RUN chmod 755 /start.sh
 CMD ["/bin/sh", "/start.sh"]

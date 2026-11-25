@@ -2,7 +2,8 @@
 set -e
 mkdir -p /var/state/ups
 /opt/nut-install/bin/usbhid-ups -a ups -u root
-/opt/nut-install/sbin/upsd -F -u root &
+# Renamed in the Dockerfile to survive DSM's `killall upsd`.
+/opt/nut-install/sbin/nut-upsd -F -u root &
 
 # upsd stays up when the driver dies, so DSM would keep showing "Connected"
 # while no OB event can ever arrive again. Exit instead and let the Compose

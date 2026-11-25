@@ -99,7 +99,7 @@ The Dockerfile fetches `88948fb8c0ab5e2cfa92e6f832b613e0a2094f56` by full SHA ra
 | `No matching HID UPS found` | Stock DSM driver, which has no US2000 subdriver; it rejects `-x subdriver=...` as well. |
 | `Can't chdir to /var/state/ups` | `start.sh` creates that directory; check it ran. |
 | `Connection refused` right after a reboot | DSM `upsmon` starts before Docker. It reconnected by itself after 5 s in the test. |
-| Container exits with `UPS data unavailable` | The driver or `upsd` stopped answering. `start.sh` exits deliberately so the restart policy rebuilds both: `upsd` alone would leave DSM showing a connected UPS that can never report `OB`. |
+| Container exits with `UPS data unavailable` | The driver or `nut-upsd` stopped answering. `start.sh` exits deliberately so the restart policy rebuilds both: `nut-upsd` alone would leave DSM showing a connected UPS that can never report `OB`. |
 | `upsd.conf is world readable` | The `chmod 600` step was skipped. |
 | DSM GUI rejects the address | Use the bridge gateway, not loopback. |
 | `battery.runtime: 65535` | Invalid; ignore it. |
@@ -111,7 +111,7 @@ The Dockerfile fetches `88948fb8c0ab5e2cfa92e6f832b613e0a2094f56` by full SHA ra
 - Confirm volumes finish unmounting during Safe Mode.
 - Unattended recovery after mains returns. Not possible in software: the UPS accepts output-control commands and ignores them, so it needs external hardware that can break the 12 V feed — see [output-control-test.md](output-control-test.md).
 - Use a multi-stage build to drop the build tools from the runtime image.
-- Harden: the container runs `usbhid-ups` and `upsd` as root.
+- Harden: the container runs `usbhid-ups` and `nut-upsd` as root.
 
 ## References
 
