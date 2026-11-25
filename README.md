@@ -109,7 +109,7 @@ The Dockerfile fetches `88948fb8c0ab5e2cfa92e6f832b613e0a2094f56` by full SHA ra
 
 - Verify on another NAS model and DSM build.
 - Confirm volumes finish unmounting during Safe Mode.
-- Solve unattended recovery after mains returns.
+- Unattended recovery after mains returns. Not possible in software: the UPS accepts output-control commands and ignores them, so it needs external hardware that can break the 12 V feed — see [output-control-test.md](output-control-test.md).
 - Use a multi-stage build to drop the build tools from the runtime image.
 - Harden: the container runs `usbhid-ups` and `upsd` as root.
 
